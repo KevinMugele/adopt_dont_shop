@@ -9,6 +9,6 @@ RSpec.describe 'the applications new page' do
 
     click_on "Start an Adoption Application"
 
-    expect(current_path).to eq("/pets/#{dog.id}/applications/new")
+    expect(current_path).to eq("/applications/new")
   end
 end

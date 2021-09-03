@@ -5,19 +5,16 @@ class ApplicationsController < ApplicationController
   end
 
   def show
-    @application = Application.find(params[:application_id])
+    @application = Application.find(params[:id])
   end
 
   def new
-    @pet = Pet.find(params[:pet_id])
   end
 
   def create
+    application = Application.create!(application_params)
 
-    pet = Pet.find(params[:pet_id])
-    application = pet.applications.create!(application_params)
-
-    redirect_to "/pets/#{pet.id}/applications/#{application.id}"
+    redirect_to "/applications/#{application.id}"
   end
 
   private
