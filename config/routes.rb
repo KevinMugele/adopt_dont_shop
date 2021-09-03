@@ -15,9 +15,6 @@ Rails.application.routes.draw do
   patch '/pets/:id', to: 'pets#update'
   delete '/pets/:id', to: 'pets#destroy'
 
-
-  
-
   get '/pets/applications/new', to: 'applications#new'
   post '/pets/applications', to: 'applications#create'
   get '/pets/applications/:application_id', to: 'applications#show'
@@ -48,4 +45,6 @@ Rails.application.routes.draw do
   get '/applications/new', to: 'applications#new'
   get '/applications/:id', to: 'applications#show'
   post '/applications', to: 'applications#create'
+
+  post '/applications/:id', to: 'application_pets#create'
 end

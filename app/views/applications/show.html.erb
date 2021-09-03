@@ -10,12 +10,16 @@
   <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
     <%= f.text_field :search %>
     <%= f.submit "Search" %>
-  <% end  %>
+  <% end  %><br>
 
   <% if !@pets.nil? %>
     <% @pets.each do |pet| %>
       <%= pet.name %>
+      <%= button_to "Adopt this Pet", "/applications/#{@application.id}", method: :post, params: {pet_id: pet.id, application_id: @application.id} %><br>
     <% end %>
   <% end %>
 
 <h3>Pets on Application: </h3>
+ <% @app_pets.each do |pet| %>
+  <%= pet.name %>
+ <% end %>
