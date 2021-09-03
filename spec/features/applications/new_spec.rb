@@ -21,7 +21,6 @@ RSpec.describe 'the applications new page' do
     expect(page).to have_field("City")
     expect(page).to have_field("State")
     expect(page).to have_field("Zip code")
-    expect(page).to have_field("Statement")
   end
 
   it 'allows you to hit submit after filling out form' do
@@ -32,7 +31,6 @@ RSpec.describe 'the applications new page' do
     fill_in('City', with: 'Sparta')
     fill_in('State', with: 'NJ')
     fill_in('Zip code', with: '90210')
-    fill_in('Statement', with: 'I love animals')
 
     click_on "Submit"
 
@@ -41,8 +39,7 @@ RSpec.describe 'the applications new page' do
     expect(page).to have_content("Sparta")
     expect(page).to have_content("NJ")
     expect(page).to have_content("90210")
-    expect(page).to have_content("I love animals")
-  end
+  end 
 
   it 'gives you an error when not filling out form properly' do
     visit "/applications/new"

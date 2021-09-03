@@ -6,16 +6,19 @@ class ApplicationsController < ApplicationController
 
   def show
     @application = Application.find(params[:id])
+    if params[:search].present?
+      @pets = Pet.search(params[:search])
+    end
   end
 
   def new
   end
 
   def create
-    @application = Application.new(application_params)
+    @application = Application.create(application_params)
     if @application.valid?
       @application.save!
-      redirect_to action: "show", id: @application.id
+      redirect_to "/applications/#{@application.id}"
     else
       flash[:notice] = "Warning - You must fill in all fields before beginning your application!"
       redirect_to "/applications/new"
