@@ -12,9 +12,14 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-    application = Application.create!(application_params)
-
-    redirect_to "/applications/#{application.id}"
+    @application = Application.new(application_params)
+    if @application.valid?
+      @application.save!
+      redirect_to action: "show", id: @application.id
+    else
+      flash[:notice] = "Warning - You must fill in all fields before beginning your application!"
+      redirect_to "/applications/new"
+    end
   end
 
   private
