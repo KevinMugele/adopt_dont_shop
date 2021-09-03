@@ -11,4 +11,48 @@ RSpec.describe 'the applications new page' do
 
     expect(current_path).to eq("/applications/new")
   end
+
+  it 'has a form to fill out' do
+    visit "/applications/new"
+
+    expect(page).to have_content("New Application")
+    expect(page).to have_field("Name")
+    expect(page).to have_field("Street address")
+    expect(page).to have_field("City")
+    expect(page).to have_field("State")
+    expect(page).to have_field("Zip code")
+    expect(page).to have_field("Statement")
+  end
+
+  it 'allows you to hit submit after filling out form' do
+    visit "/applications/new"
+
+    fill_in('Name', with: 'Kevin')
+    fill_in('Street address', with: '694 Glen Road')
+    fill_in('City', with: 'Sparta')
+    fill_in('State', with: 'NJ')
+    fill_in('Zip code', with: '90210')
+    fill_in('Statement', with: 'I love animals')
+
+    click_on "Submit"
+
+    expect(page).to have_content("Kevin")
+    expect(page).to have_content("694 Glen Road")
+    expect(page).to have_content("Sparta")
+    expect(page).to have_content("NJ")
+    expect(page).to have_content("90210")
+    expect(page).to have_content("I love animals")
+  end
+
+  it 'gives you an error when not filling out form properly' do
+    visit "/applications/new"
+
+    fill_in('Name', with: 'Kevin')
+    fill_in('Street address', with: '694 Glen Road')
+
+    click_on "Submit"
+
+    expect(current_path).to eq("/applications/new")
+    expect(page).to have_content("Warning - You must fill in all fields before beginning your application!")
+  end
 end
