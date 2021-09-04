@@ -23,6 +23,6 @@ pet7 = shelter3.pets.create!(adoptable: true, age: 6, breed: 'Pitbull', name: 'C
 pet8 = shelter3.pets.create!(adoptable: true, age: 7, breed: 'Poodle', name: 'Lilly')
 pet9 = shelter3.pets.create!(adoptable: true, age: 8, breed: 'Greyhound', name: 'Sparky')
 
-application1 = Application.create!(name: "Kevin M", street_address: '694 Glen Road', city: 'Sparta', state: 'NJ', zip_code: 90210, statement: "I love animals", status: 'Pending')
-application2 = Application.create!(name: "Michael C", street_address: '201 W Colfax Ave', city: 'Denver', state: 'NJ', zip_code: 90212, statement: "test", status: 'Pending')
-application3 = Application.create!(name: "Chris M", street_address: '1600 Pennsylvania Ave', city: 'Washington', state: 'NJ', zip_code: 90213, statement: "please", status: 'Pending')
+application1 = Application.create!(name: "Kevin M", street_address: '694 Glen Road', city: 'Sparta', state: 'NJ', zip_code: 90210, status: 'In Progress')
+application2 = Application.create!(name: "Michael C", street_address: '201 W Main Ave', city: 'Denver', state: 'NJ', zip_code: 90212, status: 'In Progress')
+application3 = Application.create!(name: "Chris M", street_address: '11 Pennsylvania Ave', city: 'Washington', state: 'NJ', zip_code: 90213, status: 'In Progress')

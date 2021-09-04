@@ -6,20 +6,31 @@
 
 <h2>Add a Pet to this Application</h2>
 
-<h4>Search by Pet Name: </h4>
-  <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
-    <%= f.text_field :search %>
-    <%= f.submit "Search" %>
-  <% end  %><br>
 
+
+<% if @application.status == "In Progress" %>
+  <h4>Search by Pet Name: </h4>
+    <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+      <%= f.text_field :search %>
+      <%= f.submit "Search" %>
+    <% end  %></br>
   <% if !@pets.nil? %>
     <% @pets.each do |pet| %>
       <%= pet.name %>
       <%= button_to "Adopt this Pet", "/applications/#{@application.id}", method: :post, params: {pet_id: pet.id, application_id: @application.id} %><br>
     <% end %>
   <% end %>
+<% end %>
 
-<h3>Pets on Application: </h3>
- <% @app_pets.each do |pet| %>
-  <%= pet.name %>
- <% end %>
+  <h3>Pets on Application: </h3>
+   <% @app_pets.each do |pet| %>
+    <%= pet.name %></br>
+   <% end %>
+
+<% if @application.status == "In Progress" && @app_pets.count > 0 %>
+   <h4> Enter why you would make a good owner for the listed pet(s): </h4>
+   <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
+     <%= f.text_field :statement %>
+     <%= f.submit "Submit" %>
+   <% end  %></br>
+<% end %>

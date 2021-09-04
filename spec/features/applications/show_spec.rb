@@ -63,6 +63,53 @@ RSpec.describe 'the applications show' do
       expect(page).to have_button("Adopt this Pet")
 
       click_button "Adopt this Pet"
+
+      expect(current_path).to eq("/applications/#{application.id}")
+    end
+  end
+
+  describe "submitting an application" do
+    it "has a submit application section" do
+      shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
+      pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
+      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+
+      visit "/applications/#{application.id}"
+
+      fill_in(:search, with: "Ollie")
+
+      click_on "Search"
+
+      expect(page).to have_button("Adopt this Pet")
+
+      click_button "Adopt this Pet"
+
+      expect(page).to have_content("Enter why you would make a good owner for the listed pet(s)")
+      expect(page).to have_field(:statement)
+      expect(page).to have_button("Submit")
+    end
+
+    it "allows you to submit an application" do
+      shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
+      pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
+      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+
+      visit "/applications/#{application.id}"
+
+      fill_in(:search, with: "Ollie")
+
+      click_on "Search"
+
+      expect(page).to have_button("Adopt this Pet")
+
+      click_button "Adopt this Pet"
+
+      fill_in(:statement, with: "I love animals")
+      click_button "Submit"
+
+      expect(current_path).to eq("/applications/#{application.id}")
+      expect(page).to have_content("Pending")
+      expect(page).to have_content("I love animals")
     end
   end
 
