@@ -123,5 +123,29 @@ RSpec.describe 'the applications show' do
     end
   end
 
+  describe "database logic" do
+    it "allows for partial searches of pets" do
+      shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
+      pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
+      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
 
+      visit "/applications/#{application.id}"
+      fill_in(:search, with: "O")
+      click_on "Search"
+
+      expect(page).to have_button("Adopt this Pet")
+    end
+
+    it "allows for case insensitive searches of pets" do
+      shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
+      pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
+      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+
+      visit "/applications/#{application.id}"
+      fill_in(:search, with: "OLLIE")
+      click_on "Search"
+
+      expect(page).to have_button("Adopt this Pet")
+    end
+  end
 end
