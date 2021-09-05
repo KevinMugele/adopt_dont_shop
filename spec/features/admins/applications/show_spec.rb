@@ -14,7 +14,7 @@ RSpec.describe "Admin Applications Show" do
 
       visit "/admin/applications/#{application1.id}"
 
-      expect(page).to have_content("Admin: Applications")
+      expect(page).to have_content("Admin Applications Page")
       expect(page).to have_content(application1.name)
       expect(page).to have_content(application1.state)
       expect(page).to have_content(application1.city)

@@ -49,9 +49,9 @@ Rails.application.routes.draw do
 
   post '/applications/:id', to: 'application_pets#create'
 
-  
+
   namespace :admin do
-    resources :applications, only: :show
-    resources :shelters, only: [:index, :show]
+    resources :applications
+    resources :shelters
   end
 end

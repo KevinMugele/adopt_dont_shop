@@ -26,3 +26,5 @@ pet9 = shelter3.pets.create!(adoptable: true, age: 8, breed: 'Greyhound', name: 
 application1 = Application.create!(name: "Kevin M", street_address: '694 Glen Road', city: 'Sparta', state: 'NJ', zip_code: 90210, status: 'In Progress')
 application2 = Application.create!(name: "Michael C", street_address: '201 W Main Ave', city: 'Denver', state: 'NJ', zip_code: 90212, status: 'In Progress')
 application3 = Application.create!(name: "Chris M", street_address: '11 Pennsylvania Ave', city: 'Washington', state: 'NJ', zip_code: 90213, status: 'In Progress')
+
+app_pet1 = ApplicationPet.create!(application_id: application1.id, pet_id: pet1.id)

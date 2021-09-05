@@ -1,4 +1,4 @@
-<h1>Admin: Applications</h1>
+<h1>Admin Applications Page</h1>
 
 <h3> <%= @application.name %> </h3>
 <h3> <%= @application.street_address %> <%= @application.city %> <%= @application.state %> <%= @application.zip_code %></h3>
@@ -7,5 +7,15 @@
 
 <h3>Pets on Application: </h3>
  <% @app_pets.each do |pet| %>
-  <%= pet.name %></br>
+  <% if pet.app_pet_status(@application.id) == "Approved" %>
+    <%= pet.name %></br>
+    <%= "Approved" %>
+  <% elsif pet.app_pet_status(@application.id) == "Rejected" %>
+    <%= pet.name %></br>
+    <%= "Rejected" %>
+  <% else %>
+    <%= pet.name %></br>
+    <%= button_to "Accept", "/admin/applications/#{@application.id}", method: :patch, params: {approved: true, pet_id: pet.id, application_id: @application.id} %><br>
+    <%= button_to "Reject", "/admin/applications/#{@application.id}", method: :patch, params: {pet_id: pet.id, application_id: @application.id} %><br>
+  <% end  %>
  <% end %>

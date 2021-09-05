@@ -7,4 +7,8 @@ class ApplicationPetsController < ApplicationController
 
     redirect_to "/applications/#{@application.id}"
   end
+
+  def update
+
+  end
 end
