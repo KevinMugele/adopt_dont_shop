@@ -23,9 +23,10 @@ class Application < ApplicationRecord
   def update_status!
     if approved?
       update({status: "Approved"})
-      pets.each do |pet|
-        pet.update({adoptable: false})
-      end
+      pets.update_all(adoptable: false)
+      # pets.each do |pet|
+      #   pet.update({adoptable: false})
+      # end
     elsif rejected?
       update({status: "Rejected"})
     end
