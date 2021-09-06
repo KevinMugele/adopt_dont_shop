@@ -1,5 +1,15 @@
-<h1>Current Application</h1>
-<h3> <%= @application.name %> </h3>
-<h3> <%= @application.street_address %> <%= @application.city %> <%= @application.state %> <%= @application.zip_code %></h3>
-<h3> <%= @application.status %></h3>
-<h3> <%= @application.statement %></h3>
+<h1><%= @shelter.format_shelter_info %></h1>
+
+
+<h2>Statistics</h2>
+<p>Number of Pets that have been adopted: <%= @shelter.total_adopted_pets %></p>
+<p>Number of Pets available for adoption: <%= @shelter.number_adoptable_pets %> </p>
+<p>Average Pet Age for Adoptable Pets: <%= @shelter.average_age %> </p>
+
+
+<h2>Action Required</h2>
+<ul>
+  <% @shelter.action_required.each do |pet| %>
+    <li><%= pet.name %></li>
+  <% end %>
+</ul>

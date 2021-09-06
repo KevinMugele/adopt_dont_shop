@@ -5,6 +5,17 @@ class Shelter < ApplicationRecord
 
   has_many :pets, dependent: :destroy
 
+  scope :reverse_alphabetical, -> {
+    Shelter.find_by_sql(
+      "SELECT shelters.* FROM shelters ORDER BY shelters.name DESC"
+    )
+  }
+
+  scope :pending_applications, -> {
+    Shelter.joins(pets: :applications).where('applications.status = ?', "Pending")
+    .distinct.order(:name)
+  }
+
   def self.order_by_recently_created
     order(created_at: :desc)
   end
@@ -32,14 +43,36 @@ class Shelter < ApplicationRecord
     adoptable_pets.where('age >= ?', age_filter)
   end
 
-  scope :reverse_alphabetical, -> {
-    Shelter.find_by_sql(
-      "SELECT shelters.* FROM shelters ORDER BY shelters.name DESC"
-    )
-  }
+  def shelter_info
+   Shelter.find_by_sql [
+     'SELECT shelters.name, shelters.city FROM shelters WHERE shelters.id = ?', self.id
+     ]
+  end
 
-  scope :pending_applications, -> {
-    Shelter.joins(pets: :applications).where('applications.status = ?', "Pending")
-    .distinct.order(:name)
-  }
+  def format_shelter_info
+    info = shelter_info.first
+    "#{info[:name]} - #{info[:city]}"
+  end
+
+  def alphabetical_order
+    order(name: :asc)
+  end
+
+  def number_adoptable_pets
+    pets.where(adoptable: true).count
+  end
+
+  def total_adopted_pets
+    pets.joins(:applications)
+      .where('applications.status = ? AND pets.adoptable = ?', "Approved", false)
+      .count('pets.id')
+  end
+
+  def average_age
+    pets.where(adoptable: true).average(:age)
+  end
+
+  def action_required
+    pets.joins(:applications).where('applications.status = ?', "Pending")
+  end
 end
