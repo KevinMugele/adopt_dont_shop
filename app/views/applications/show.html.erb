@@ -22,7 +22,7 @@
 
   <h3>Pets on Application: </h3>
    <% @app_pets.each do |pet| %>
-    <%= pet.name %></br>
+    <%= link_to pet.name, "/pets/#{pet.id}" %></br>
    <% end %>
 
 <% if @application.status == "In Progress" && @app_pets.count > 0 %>

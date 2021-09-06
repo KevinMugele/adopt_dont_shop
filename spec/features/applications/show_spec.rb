@@ -21,7 +21,7 @@ RSpec.describe 'the applications show' do
 
     visit "/applications/#{application.id}"
 
-    expect(page).to have_content("Add a Pet to this Application")
+    expect(page).to have_content("Pets on Application")
   end
 
   describe "search field" do
