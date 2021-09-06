@@ -13,7 +13,7 @@ class Admin::ApplicationsController < ApplicationController
       app_pets.update({status: "Rejected"})
     end
 
-    app_pets.save
+    application.update_status!
 
     redirect_to "/admin/applications/#{application.id}"
   end

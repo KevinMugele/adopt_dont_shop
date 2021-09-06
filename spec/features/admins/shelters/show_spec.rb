@@ -12,7 +12,10 @@ RSpec.describe "Admin Shelters Show" do
       app_pet1 = ApplicationPet.create!(pet_id: pet1.id, application_id: application1.id)
       app_pet2 = ApplicationPet.create!(pet_id: pet2.id, application_id: application2.id)
 
-      visit "/admin/applications/#{application1.id}"
+      visit "/admin/shelters"
+
+      expect(page).to have_content(shelter1.name)
+      expect(page).to have_content(shelter2.name)
     end
   end
 end
