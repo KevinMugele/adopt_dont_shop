@@ -67,5 +67,29 @@ RSpec.describe Shelter, type: :model do
         expect(@shelter_1.pet_count).to eq(3)
       end
     end
+
+    describe '.action_required' do
+      it 'shows what applications have action required' do
+        expect(@shelter_1.action_required).to eq([])
+      end
+    end
+
+    describe 'average age' do
+      it 'shows the average age' do
+        expect(@shelter_1.average_age).to eq(0.4e1)
+      end
+
+      describe 'total adopted pets' do
+        it 'shows the total_adopted_pets' do
+          expect(@shelter_1.total_adopted_pets).to eq(0)
+        end
+      end
+
+      describe 'total adopted pets' do
+        it 'shows the total_adopted_pets' do
+          expect(@shelter_1.total_adopted_pets).to eq(0)
+        end
+      end
+    end
   end
 end
