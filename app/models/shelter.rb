@@ -54,7 +54,7 @@ class Shelter < ApplicationRecord
     "#{info[:name]} - #{info[:city]}"
   end
 
-  def alphabetical_order
+  def self.alphabetical_order
     order(name: :asc)
   end
 

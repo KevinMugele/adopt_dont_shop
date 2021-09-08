@@ -39,4 +39,17 @@ RSpec.describe Pet, type: :model do
       end
     end
   end
+
+  describe 'app_pet_status' do
+    it 'shows the app_pet_status' do
+      shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
+      pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
+      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      app_pet = ApplicationPet.create!(pet_id: pet1.id, application_id: application.id)
+
+      test = ApplicationPet.find_with_ids(pet1.id, application.id)
+
+      expect(pet1.app_pet_status(application.id)).to eq(nil)
+    end
+  end
 end

@@ -20,15 +20,15 @@
         <%= pet.name %><br>
         <%= "Rejected" %>
       <% else %>
-        <% if pet.adoptable %>
-          <%= pet.name %><br>
-          <%= button_to "Accept", "/admin/applications/#{@application.id}", method: :patch, params: {approved: true, pet_id: pet.id, application_id: @application.id} %><br>
-        <% else %>
-          <%= pet.name %>
-          <p> Pet already approved for adoption.</p>
-        <% end  %>
-        <%= button_to "Reject", "/admin/applications/#{@application.id}", method: :patch, params: {pet_id: pet.id, application_id: @application.id} %><br>
+      <% if pet.adoptable %>
+        <%= pet.name %><br>
+        <%= button_to "Accept", "/admin/applications/#{@application.id}", method: :patch, params: {approved: true, pet_id: pet.id, application_id: @application.id} %><br>
+      <% else %>
+        <%= pet.name %>
+        <p> Pet already approved for adoption.</p>
       <% end  %>
+      <%= button_to "Reject", "/admin/applications/#{@application.id}", method: :patch, params: {pet_id: pet.id, application_id: @application.id} %><br>
      <% end %>
+    <% end  %>
     </div>
 <% end %>
