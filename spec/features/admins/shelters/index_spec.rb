@@ -33,7 +33,7 @@ RSpec.describe "Admin Shelters" do
 
       expect(page).to have_content("Shelters with Pending Applications:")
       expect(page).to have_content(shelter1.name)
-        expect(page).to have_content(shelter2.name)
+      expect(page).to have_content(shelter2.name)
     end
   end
 end
