@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Application < ApplicationRecord
   has_many :application_pets
   has_many :pets, through: :application_pets, dependent: :destroy
@@ -10,25 +12,22 @@ class Application < ApplicationRecord
 
   def approved?
     approved_pet_apps = ApplicationPet.where(status: 'Approved', application_id: id)
-    if approved_pet_apps.count == self.pets.count
-      true
-    end
+    true if approved_pet_apps.count == pets.count
   end
 
   def rejected?
     application_pets.where(status: 'Rejected').exists?
   end
 
-
   def update_status!
     if approved?
-      update({status: "Approved"})
+      update({ status: 'Approved' })
       pets.update_all(adoptable: false)
       # pets.each do |pet|
       #   pet.update({adoptable: false})
       # end
     elsif rejected?
-      update({status: "Rejected"})
+      update({ status: 'Rejected' })
     end
   end
 end

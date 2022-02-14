@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Shelter < ApplicationRecord
   validates :name, presence: true
   validates :rank, presence: true, numericality: true
@@ -5,15 +7,15 @@ class Shelter < ApplicationRecord
 
   has_many :pets, dependent: :destroy
 
-  scope :reverse_alphabetical, -> {
+  scope :reverse_alphabetical, lambda {
     Shelter.find_by_sql(
-      "SELECT shelters.* FROM shelters ORDER BY shelters.name DESC"
+      'SELECT shelters.* FROM shelters ORDER BY shelters.name DESC'
     )
   }
 
-  scope :pending_applications, -> {
-    Shelter.joins(pets: :applications).where('applications.status = ?', "Pending")
-    .distinct.order(:name)
+  scope :pending_applications, lambda {
+    Shelter.joins(pets: :applications).where('applications.status = ?', 'Pending')
+           .distinct.order(:name)
   }
 
   def self.order_by_recently_created
@@ -21,10 +23,10 @@ class Shelter < ApplicationRecord
   end
 
   def self.order_by_number_of_pets
-    select("shelters.*, count(pets.id) AS pets_count")
-      .joins("LEFT OUTER JOIN pets ON pets.shelter_id = shelters.id")
-      .group("shelters.id")
-      .order("pets_count DESC")
+    select('shelters.*, count(pets.id) AS pets_count')
+      .joins('LEFT OUTER JOIN pets ON pets.shelter_id = shelters.id')
+      .group('shelters.id')
+      .order('pets_count DESC')
   end
 
   def pet_count
@@ -44,9 +46,9 @@ class Shelter < ApplicationRecord
   end
 
   def shelter_info
-   Shelter.find_by_sql [
-     'SELECT shelters.name, shelters.city FROM shelters WHERE shelters.id = ?', self.id
-     ]
+    Shelter.find_by_sql [
+      'SELECT shelters.name, shelters.city FROM shelters WHERE shelters.id = ?', id
+    ]
   end
 
   def format_shelter_info
@@ -64,8 +66,8 @@ class Shelter < ApplicationRecord
 
   def total_adopted_pets
     pets.joins(:applications)
-      .where('applications.status = ? AND pets.adoptable = ?', "Approved", false)
-      .count('pets.id')
+        .where('applications.status = ? AND pets.adoptable = ?', 'Approved', false)
+        .count('pets.id')
   end
 
   def average_age
@@ -73,6 +75,6 @@ class Shelter < ApplicationRecord
   end
 
   def action_required
-    pets.joins(:applications).where('applications.status = ?', "Pending")
+    pets.joins(:applications).where('applications.status = ?', 'Pending')
   end
 end

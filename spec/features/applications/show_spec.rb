@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'the applications show' do
   it "shows the application and all it's attributes" do
-    application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210, status: "Open", statement: "I am looking to give a dog their forever home")
+    application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                      state: 'New Jersey', zip_code: 90_210, status: 'Open', statement: 'I am looking to give a dog their forever home')
 
     visit "/applications/#{application.id}"
 
-    expect(page).to have_content("Current Application")
+    expect(page).to have_content('Current Application')
     expect(page).to have_content(application.name)
     expect(page).to have_content(application.street_address)
     expect(page).to have_content(application.city)
@@ -16,136 +19,145 @@ RSpec.describe 'the applications show' do
     expect(page).to have_content(application.statement)
   end
 
-  it "has a button to add a pet to the application" do
-    application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210, status: "Open", statement: "I am looking to give a dog their forever home")
+  it 'has a button to add a pet to the application' do
+    application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                      state: 'New Jersey', zip_code: 90_210, status: 'Open', statement: 'I am looking to give a dog their forever home')
 
     visit "/applications/#{application.id}"
 
-    expect(page).to have_content("Pets on Application")
+    expect(page).to have_content('Pets on Application')
   end
 
-  describe "search field" do
-    it "has a search field to search for a pet" do
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+  describe 'search field' do
+    it 'has a search field to search for a pet' do
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
 
-      expect(page).to have_content("Search")
+      expect(page).to have_content('Search')
     end
 
-    it "searches for a pet" do
+    it 'searches for a pet' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
 
-      fill_in(:search, with: "Ollie")
+      fill_in(:search, with: 'Ollie')
 
-      click_on "Search"
+      click_on 'Search'
 
-      expect(page).to have_content("Ollie")
+      expect(page).to have_content('Ollie')
     end
   end
 
-  describe "adding pets" do
-    it "adds a pet to an application" do
+  describe 'adding pets' do
+    it 'adds a pet to an application' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
 
-      fill_in(:search, with: "Ollie")
+      fill_in(:search, with: 'Ollie')
 
-      click_on "Search"
+      click_on 'Search'
 
-      expect(page).to have_button("Adopt this Pet")
+      expect(page).to have_button('Adopt this Pet')
 
-      click_button "Adopt this Pet"
+      click_button 'Adopt this Pet'
 
       expect(current_path).to eq("/applications/#{application.id}")
     end
   end
 
-  describe "submitting an application" do
-    it "has a submit application section" do
+  describe 'submitting an application' do
+    it 'has a submit application section' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
 
-      fill_in(:search, with: "Ollie")
+      fill_in(:search, with: 'Ollie')
 
-      click_on "Search"
+      click_on 'Search'
 
-      expect(page).to have_button("Adopt this Pet")
+      expect(page).to have_button('Adopt this Pet')
 
-      click_button "Adopt this Pet"
+      click_button 'Adopt this Pet'
 
-      expect(page).to have_content("Enter why you would make a good owner for the listed pet(s)")
+      expect(page).to have_content('Enter why you would make a good owner for the listed pet(s)')
       expect(page).to have_field(:statement)
-      expect(page).to have_button("Submit")
+      expect(page).to have_button('Submit')
     end
 
-    it "allows you to submit an application" do
+    it 'allows you to submit an application' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
 
-      fill_in(:search, with: "Ollie")
+      fill_in(:search, with: 'Ollie')
 
-      click_on "Search"
+      click_on 'Search'
 
-      expect(page).to have_button("Adopt this Pet")
+      expect(page).to have_button('Adopt this Pet')
 
-      click_button "Adopt this Pet"
+      click_button 'Adopt this Pet'
 
-      fill_in(:statement, with: "I love animals")
-      click_button "Submit"
+      fill_in(:statement, with: 'I love animals')
+      click_button 'Submit'
 
       expect(current_path).to eq("/applications/#{application.id}")
-      expect(page).to have_content("Pending")
-      expect(page).to have_content("I love animals")
+      expect(page).to have_content('Pending')
+      expect(page).to have_content('I love animals')
     end
 
-    it "no submit button without a pet on the application" do
+    it 'no submit button without a pet on the application' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
 
-      expect(page).to have_no_content("Submit")
+      expect(page).to have_no_content('Submit')
     end
   end
 
-  describe "database logic" do
-    it "allows for partial searches of pets" do
+  describe 'database logic' do
+    it 'allows for partial searches of pets' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
-      fill_in(:search, with: "O")
-      click_on "Search"
+      fill_in(:search, with: 'O')
+      click_on 'Search'
 
-      expect(page).to have_button("Adopt this Pet")
+      expect(page).to have_button('Adopt this Pet')
     end
 
-    it "allows for case insensitive searches of pets" do
+    it 'allows for case insensitive searches of pets' do
       shelter1 = Shelter.create(name: 'Sparta Shelter', city: 'Sparta', rank: 2)
       pet1 = shelter1.pets.create!(adoptable: true, age: 0, breed: 'Ginger Cat', name: 'Ollie')
-      application = Application.create!(name: "Kevin Mugele", street_address: "694 Glen Road", city: "Sparta", state: "New Jersey", zip_code: 90210)
+      application = Application.create!(name: 'Kevin Mugele', street_address: '694 Glen Road', city: 'Sparta',
+                                        state: 'New Jersey', zip_code: 90_210)
 
       visit "/applications/#{application.id}"
-      fill_in(:search, with: "OLLIE")
-      click_on "Search"
+      fill_in(:search, with: 'OLLIE')
+      click_on 'Search'
 
-      expect(page).to have_button("Adopt this Pet")
+      expect(page).to have_button('Adopt this Pet')
     end
   end
 end

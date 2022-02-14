@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateApplications < ActiveRecord::Migration[5.2]
   def change
     create_table :applications do |t|
@@ -6,7 +8,7 @@ class CreateApplications < ActiveRecord::Migration[5.2]
       t.string :city
       t.string :state
       t.integer :zip_code
-      t.string :status, default: "In Progress"
+      t.string :status, default: 'In Progress'
       t.string :statement
 
       t.timestamps

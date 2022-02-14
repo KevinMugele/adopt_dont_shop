@@ -1,20 +1,24 @@
-class Admin::ApplicationsController < ApplicationController
-  def show
-    @application = Application.find(params[:id])
-    @app_pets = @application.pets
-  end
+# frozen_string_literal: true
 
-  def update
-    application = Application.find(params[:id])
-    app_pets = ApplicationPet.find_with_ids(params[:pet_id], params[:application_id])
-    if params[:approved].present?
-      app_pets.update({status: "Approved"})
-    else
-      app_pets.update({status: "Rejected"})
+module Admin
+  class ApplicationsController < ApplicationController
+    def show
+      @application = Application.find(params[:id])
+      @app_pets = @application.pets
     end
 
-    application.update_status!
+    def update
+      application = Application.find(params[:id])
+      app_pets = ApplicationPet.find_with_ids(params[:pet_id], params[:application_id])
+      if params[:approved].present?
+        app_pets.update({ status: 'Approved' })
+      else
+        app_pets.update({ status: 'Rejected' })
+      end
 
-    redirect_to "/admin/applications/#{application.id}"
+      application.update_status!
+
+      redirect_to "/admin/applications/#{application.id}"
+    end
   end
 end

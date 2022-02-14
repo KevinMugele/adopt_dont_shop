@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get '/', to: 'application#welcome'
 
@@ -48,7 +50,6 @@ Rails.application.routes.draw do
   patch '/applications/:id', to: 'applications#update'
 
   post '/applications/:id', to: 'application_pets#create'
-
 
   namespace :admin do
     resources :applications

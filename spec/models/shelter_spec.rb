@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Shelter, type: :model do
@@ -26,7 +28,7 @@ RSpec.describe Shelter, type: :model do
   describe 'class methods' do
     describe '#search' do
       it 'returns partial matches' do
-        expect(Shelter.search("Fancy")).to eq([@shelter_3])
+        expect(Shelter.search('Fancy')).to eq([@shelter_3])
       end
     end
 
@@ -43,41 +45,41 @@ RSpec.describe Shelter, type: :model do
     end
   end
 
-    describe 'instance methods' do
-      describe '.adoptable_pets' do
-        it 'only returns pets that are adoptable' do
-          expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
-        end
+  describe 'instance methods' do
+    describe '.adoptable_pets' do
+      it 'only returns pets that are adoptable' do
+        expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
       end
+    end
 
-      describe '.alphabetical_pets' do
-        it 'returns pets associated with the given shelter in alphabetical name order' do
-          expect(@shelter_1.alphabetical_pets).to eq([@pet_4, @pet_2])
-        end
+    describe '.alphabetical_pets' do
+      it 'returns pets associated with the given shelter in alphabetical name order' do
+        expect(@shelter_1.alphabetical_pets).to eq([@pet_4, @pet_2])
       end
+    end
 
-      describe '.shelter_pets_filtered_by_age' do
-        it 'filters the shelter pets based on given params' do
-          expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_4])
-        end
+    describe '.shelter_pets_filtered_by_age' do
+      it 'filters the shelter pets based on given params' do
+        expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_4])
       end
+    end
 
-      describe '.pet_count' do
-        it 'returns the number of pets at the given shelter' do
-          expect(@shelter_1.pet_count).to eq(3)
-        end
+    describe '.pet_count' do
+      it 'returns the number of pets at the given shelter' do
+        expect(@shelter_1.pet_count).to eq(3)
       end
+    end
 
-      describe '.action_required' do
-        it 'shows what applications have action required' do
-          expect(@shelter_1.action_required).to eq([])
-        end
+    describe '.action_required' do
+      it 'shows what applications have action required' do
+        expect(@shelter_1.action_required).to eq([])
       end
+    end
 
-      describe 'average age' do
-        it 'shows the average age' do
-          expect(@shelter_1.average_age).to eq(0.4e1)
-        end
+    describe 'average age' do
+      it 'shows the average age' do
+        expect(@shelter_1.average_age).to eq(0.4e1)
+      end
 
       describe 'total adopted pets' do
         it 'shows the total_adopted_pets' do
@@ -98,30 +100,30 @@ RSpec.describe Shelter, type: :model do
       end
 
       describe 'shelters with pending applications' do
-       it '#pending_applications in alphabetical order' do
-         app = Application.create!(
-           name: 'Kevin Mugele',
-           street_address: '123',
-           city: 'a',
-           state: 'b',
-           zip_code: 'a',
-           statement: 'pets'
-           )
-           app.pets << @pet_1
-           app.pets << @pet_2
-           app.pets << @pet_3
+        it '#pending_applications in alphabetical order' do
+          app = Application.create!(
+            name: 'Kevin Mugele',
+            street_address: '123',
+            city: 'a',
+            state: 'b',
+            zip_code: 'a',
+            statement: 'pets'
+          )
+          app.pets << @pet_1
+          app.pets << @pet_2
+          app.pets << @pet_3
 
-           app.update_attribute(:status, "Pending")
+          app.update_attribute(:status, 'Pending')
 
-           expect(Shelter.pending_applications).to eq([@shelter_3, @shelter_1])
-         end
-       end
+          expect(Shelter.pending_applications).to eq([@shelter_3, @shelter_1])
+        end
+      end
 
       describe 'shelter info' do
-       it '#shelter_info' do
+        it '#shelter_info' do
           expected = {
-            "name" => 'Paws',
-            "city" => 'Dover, NJ'
+            'name' => 'Paws',
+            'city' => 'Dover, NJ'
           }
           result = @shelter_1.shelter_info.first.serializable_hash
 
@@ -129,7 +131,7 @@ RSpec.describe Shelter, type: :model do
         end
 
         it 'has formatted info' do
-          expect(@shelter_1.format_shelter_info).to eq("Paws - Dover, NJ")
+          expect(@shelter_1.format_shelter_info).to eq('Paws - Dover, NJ')
         end
       end
 

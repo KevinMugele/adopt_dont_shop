@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationPet < ApplicationRecord
   belongs_to :application
   belongs_to :pet

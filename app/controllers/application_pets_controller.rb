@@ -1,5 +1,6 @@
-class ApplicationPetsController < ApplicationController
+# frozen_string_literal: true
 
+class ApplicationPetsController < ApplicationController
   def create
     @pet = Pet.find(params[:pet_id])
     @application = Application.find(params[:application_id])
@@ -8,6 +9,5 @@ class ApplicationPetsController < ApplicationController
     redirect_to "/applications/#{@application.id}"
   end
 
-  def update
-  end
+  def update; end
 end
